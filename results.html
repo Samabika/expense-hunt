@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Expense Hunt Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Results</h1>
+    <p id="resultText"></p>
+    <a href="index.html" style="font-size: 20px; text-decoration: none; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Play Again</a>
+    <script>
+        const score = localStorage.getItem('score') || 0;
+        const totalExpenses = localStorage.getItem('totalExpenses') || 0;
+
+        document.getElementById('resultText').innerText = `You found ${totalExpenses} expenses and scored ${score} points!`;
+        localStorage.removeItem('score'); // Clear score after displaying
+        localStorage.removeItem('totalExpenses'); // Clear total expenses after displaying
+    </script>
+</body>
+</html>

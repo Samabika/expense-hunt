@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find the Expenses!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #expenseDescription {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find the Expenses!</h1>
+    <p>Click on the expenses you find!</p>
+    <img src="office-image.jpg" usemap="#officeMap" style="max-width: 100%; height: auto;" alt="Office Image"/>
+    <map name="officeMap">
+        <area shape="rect" coords="34,44,270,350" href="javascript:void(0);" onclick="showExpense('officeSupplies')" alt="Office Supplies">
+        <area shape="rect" coords="300,50,500,200" href="javascript:void(0);" onclick="showExpense('internet')" alt="Internet Bill">
+        <area shape="rect" coords="50,400,250,500" href="javascript:void(0);" onclick="showExpense('utilities')" alt="Utilities Bill">
+        <!-- Add more areas for other expenses here -->
+    </map>
+    <div id="expenseDescription"></div>
+    <script>
+        let score = 0;
+        let totalExpenses = 0;
+
+        function showExpense(expense) {
+            let description;
+            if (expense === 'officeSupplies') {
+                description = "Office Supplies: $50";
+                totalExpenses++;
+            } else if (expense === 'internet') {
+                description = "Internet Bill: $100";
+                totalExpenses++;
+            } else if (expense === 'utilities') {
+                description = "Utilities Bill: $75";
+                totalExpenses++;
+            }
+            // Add more expense cases as needed
+
+            document.getElementById('expenseDescription').innerHTML = `
+                <p>${description}</p>
+                <label for="category">Categorize this expense:</label>
+                <select id="category">
+                    <option value="fixed">Fixed</option>
+                    <option value="variable">Variable</option>
+                    <option value="miscellaneous">Miscellaneous</option>
+                </select>
+                <button onclick="submitExpense('${expense}')">Submit</button>
+            `;
+        }
+
+        function submitExpense(expense) {
+            const category = document.getElementById('category').value;
+            if (category) {
+                score += 10; // Award points for correct categorization (you can adjust logic here)
+                alert(`You categorized ${expense} correctly!`);
+            }
+            document.getElementById('expenseDescription').innerHTML = ""; // Clear description
+
+            // Check if all expenses have been found
+            if (totalExpenses === 3) { // Change this number based on total areas
+                localStorage.setItem('score', score);
+                localStorage.setItem('totalExpenses', totalExpenses);
+                window.location.href = 'results.html'; // Redirect to results page
+            }
+        }
+    </script>
+</body>
+</html>
